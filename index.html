@@ -588,12 +588,8 @@
 
         
         <script>
-
             $(document).ready(function () {
-
-                // Define la estructura de datos para las categorías
                 const resultadosCategorias = {
-
                     R: {
                         descripcion: "Tipo Realista. Personas que se enfrentan a su ambiente de forma objetiva y concreta. Se inclinan a ocupaciones relacionadas con el manejo de instrumentos, máquinas, etc... Prefieren actividades que impliquen dinamismo, capacidad manual y motora.",
                         aptitudes: "Pueden tener aptitudes en el área de las Matemáticas, psicomotrices y de tipo mecánico.",
@@ -627,35 +623,46 @@
                         carreras: "Carreras recomendadas de la UCB que se relacionan con tus gustos y personalidad: Administración de empresas, Ingeniería comercial."
                     }
                 };
-
-
-
+    
                 // Evento para calcular puntajes
                 $("#calcularBtn").click(function () {
                     
+                    // Verifica que haya al menos 3 grupos con 2 o más resultados
+                    const gruposConSuficientesResultados = [];
+                    for (let i = 1; i <= 9; i++) {
+                        const respuestasGrupo = $(`input[name="grupo${i}[]"]:checked`).length;
+                        if (respuestasGrupo >= 2) {
+                            gruposConSuficientesResultados.push(i);
+                        }
+                    }
 
+                    if (gruposConSuficientesResultados.length < 3) {
+                        // Muestra un mensaje de error y evita continuar con el cálculo
+                        alert("Debe seleccionar al menos 2 respuestas en 3 grupos diferentes para realizar el test.");
+                        return;
+                    }
+                    
+
+                    // Continúa con el cálculo de puntajes
                     const respuestasSeleccionadas = [];
-
+    
                     // Recopila las respuestas seleccionadas de todos los grupos
                     for (let i = 1; i <= 9; i++) {
-
                         $(`input[name="grupo${i}[]"]:checked`).each(function () {
                             respuestasSeleccionadas.push(parseInt($(this).val()));
                         });
                     }
-
+    
                     // Define las categorías y sus números asociados
                     const puntajes = {
-
                         R: [1, 7, 13, 19, 25, 31, 37, 43, 49, 55, 61, 67, 73, 79, 85],
                         I: [2, 8, 14, 20, 26, 32, 38, 44, 50, 56, 62, 68, 74, 80, 86],
                         A: [3, 9, 15, 21, 27, 33, 39, 45, 51, 57, 63, 69, 75, 81, 87],
                         S: [4, 10, 16, 22, 28, 34, 40, 46, 52, 58, 64, 70, 76, 82, 88],
                         E: [5, 11, 17, 23, 29, 35, 41, 47, 53, 59, 65, 71, 77, 83, 89],
                         C: [6, 12, 18, 24, 30, 36, 42, 48, 54, 60, 66, 72, 78, 84, 90]
-
                     };
-
+    
                     // Inicializa los puntajes totales
                     const puntajesTotales = {
                         R: 0,
@@ -665,99 +672,59 @@
                         E: 0,
                         C: 0
                     };
-
+    
                     // Calcula los puntajes totales para cada categoría
                     for (const categoria in puntajesTotales) {
-
                         puntajesTotales[categoria] = respuestasSeleccionadas.reduce((total, numeroPregunta) => {
                             if (puntajes[categoria].includes(numeroPregunta)) {
                                 return total + 1;
                             }
                             return total;
                         }, 0);
-                        
-
-                        // Dentro de la función para calcular puntajes
-                        $("#calcularBtn").click(function () {
-                            // ...
-
-                            // Muestra el significado correspondiente según el resultado
-                            $("#significadoResultados p").hide(); // Oculta todos los párrafos de significado
-                            if (tresMayoresPuntajes.map(([categoria, puntaje]) => categoria).includes("R")) {
-                                $("#significadoR").show();
-                            } else if (tresMayoresPuntajes.map(([categoria, puntaje]) => categoria).includes("I")) {
-                                $("#significadoI").show();
-                            } else if (tresMayoresPuntajes.map(([categoria, puntaje]) => categoria).includes("A")) {
-                                $("#significadoA").show();
-                            } else if (tresMayoresPuntajes.map(([categoria, puntaje]) => categoria).includes("S")) {
-                                $("#significadoS").show();
-                            } else if (tresMayoresPuntajes.map(([categoria, puntaje]) => categoria).includes("E")) {
-                                $("#significadoE").show();
-                            } else if (tresMayoresPuntajes.map(([categoria, puntaje]) => categoria).includes("C")) {
-                                $("#significadoC").show();
-                            }
-                        });
-
-
                     }
-                    
-
+    
+                    // Encuentra y muestra los tres mayores puntajes
+                    const tresMayoresPuntajes = Object.entries(puntajesTotales)
+                        .sort(([, a], [, b]) => b - a)
+                        .slice(0, 3);
+    
                     // Muestra los resultados en la interfaz
                     let resultadosHTML = '';
                     for (const categoria in puntajesTotales) {
                         resultadosHTML += `${categoria}: ${puntajesTotales[categoria]}<br>`;
                     }
-
-                    // Encuentra y muestra los tres mayores puntajes
-                    const tresMayoresPuntajes = Object.entries(puntajesTotales)
-                        .sort(([, a], [, b]) => b - a)
-                        .slice(0, 3);
-
+    
                     // Muestra los resultados de las tres categorías con los puntajes más altos
                     const resultadosCategoriasHTML = tresMayoresPuntajes.map(([categoria, puntaje]) => {
                         const resultadoCategoria = resultadosCategorias[categoria];
                         return `<p><strong>${categoria}:</strong> ${resultadoCategoria.descripcion}<br>${resultadoCategoria.aptitudes || ''}<br>${resultadoCategoria.actividades || ''}<br>${resultadoCategoria.carreras}</p>`;
                     }).join("");
-
+    
                     // Muestra los tres mayores puntajes en la interfaz
                     const tresMayoresPuntajesHTML = tresMayoresPuntajes.map(([categoria, puntaje]) => `${categoria}: ${puntaje}`).join(', ');
                     resultadosHTML += `<br>Tres mayores puntajes: ${tresMayoresPuntajesHTML}`;
                     $("#resultados").html(resultadosHTML);
-
-
-
+    
                     // Muestra los resultados de las categorías con los puntajes más altos
                     $("#significadoResultados").html(resultadosCategoriasHTML);
-
-
-                    
-
-                    // Maneja el evento del botón "Limpiar"
-                    $(".limpiarBtn").click(function () {
-
-                        // Restablece el formulario a su estado inicial
-                        $("#formulario")[0].reset();
-
-                        // Oculta todos los grupos de preguntas excepto el primero
-                        $(".grupo-pregunta").not(":first").hide();
-
-                        // Reinicia el índice del grupo actual
-                        grupoActual = 1;
-
-                        // Actualiza la visibilidad de los botones de navegación
-                        actualizarBotonesNavegacion(grupoActual);
-
-                        // Deshabilita el botón "Calcular Puntajes"
-                        $(".calcularBtn").prop("disabled", true);
-
-                        // Limpia los resultados anteriores
-                        $("#resultados").html("");
-
-                    });
-
+                });
+    
+                // Maneja el evento del botón "Limpiar"
+                $(".limpiarBtn").click(function () {
+                    // Restablece el formulario a su estado inicial
+                    $("#formulario")[0].reset();
+    
+                    // Oculta todos los grupos de preguntas excepto el primero
+                    $(".grupo-pregunta").not(":first").hide();
+    
+                    // Deshabilita el botón "Calcular Puntajes"
+                    $(".calcularBtn").prop("disabled", true);
+    
+                    // Limpia los resultados anteriores
+                    $("#resultados").html("");
+                    $("#significadoResultados").html(""); // Agrega esta línea para limpiar los resultados de las categorías
                 });
             });
-
         </script>
 
     </body>
