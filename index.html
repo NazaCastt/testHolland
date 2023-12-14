@@ -563,7 +563,7 @@
             
             </div>
 
-                <button type="button" class="btn btn-primary mt-4" id="calcularBtn">Calcular Puntajes</button>
+                <button type="button" class="btn btn-success mt-4" id="calcularBtn">Calcular Puntajes</button>
                 <button type="button" class="btn btn-danger mt-4 limpiarBtn">Limpiar</button>
 
             </form>
@@ -642,6 +642,11 @@
                         return;
                     }
                     
+                    // Verifica que no se pueda seleccioanar todos los resultados
+                    if ($('input[type=checkbox]:checked').length === 90) {
+                        alert('No es posible calcular los puntajes.');
+                        return;
+                    }  
 
                     // Continúa con el cálculo de puntajes
                     const respuestasSeleccionadas = [];
