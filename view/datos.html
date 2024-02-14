@@ -1,0 +1,121 @@
+
+<!-- FUNCIONAL COMPLETO BOOTSTRAP -->
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Test de Orientación Vocacional UCB</title>
+        
+        <!-- Agrega los enlaces a las bibliotecas de Bootstrap y jQuery -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        
+        <!-- Enlace al archivo CSS externo -->
+        <link rel="stylesheet" href="../styles/style.css">
+
+        <!-- Enlace a un archivo de script externo -->
+        <script src="../scripts/datos.js"></script>
+
+    </head>
+
+    <body>
+
+        <!-- Agrega tu imagen aquí -->
+        
+        <img src="../resource/azu.png" class="mx-auto d-block">
+			
+
+        <div class='container'>
+			<div class='jumbotron'>
+			
+				<h1 class='text-center'>TEST DE ORIENTACIÓN VOCACIONAL UCB</h1>
+				
+			</div>
+		</div>
+
+        <div class='container'>
+			
+            
+            <div id="formularioEstudiante" class="container mt-4">
+
+                <h2><span class="badge badge-dark">Datos del Estudiante</span></h2>
+
+                <form id="formEstudiante">
+
+                    <div class="form-group">
+                        <label for="ci">Carnet de Identidad:</label>
+                        <input type="number" class="form-control" id="ci" name="ci" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="nombres">Nombres:</label>
+                        <input type="text" class="form-control" id="nombres" name="nombres" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="apellidos">Apellidos:</label>
+                        <input type="text" class="form-control" id="apellidos" name="apellidos" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="telefono">Teléfono Celular:</label>
+                        <input type="tel" class="form-control" id="telefono" name="telefono" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="fechaNac">Fecha de Nacimiento:</label>
+                        <input type="date" class="form-control" id="fechaNac" name="fechaNac" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="correo">Correo Electrónico:</label>
+                        <input type="email" class="form-control" id="correo" name="correo" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="colegio">Colegio:</label>
+                        <input type="text" class="form-control" id="colegio" name="colegio" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="ciudad">Ciudad:</label>
+                        <input type="text" class="form-control" id="ciudad" name="ciudad" required>
+                    </div>
+
+
+                    <!-- Preferencia de Carreras -->
+
+                        <h2><span class="badge badge-dark">PREFERENCIA DE CARRERA</span></h2>
+                        <p>Nombra en orden de importancia 3 carreras que te gustarían estudiar, donde 1 es la que más te gusta.</p>
+                    
+                        <div class="form-group">
+                            <label for="carrera1">1. </label>
+                            <input type="text" class="form-control" id="carrera1" placeholder="Nombre de la carrera">
+                        </div>
+                
+                        <div class="form-group">
+                            <label for="carrera2">2. </label>
+                            <input type="text" class="form-control" id="carrera2" placeholder="Nombre de la carrera">
+                        </div>
+                
+                        <div class="form-group">
+                            <label for="carrera3">3. </label>
+                            <input type="text" class="form-control" id="carrera3" placeholder="Nombre de la carrera">
+                        </div>
+
+                    <button type="button" class="btn btn-info" id="guardarEstudiante" onclick="enviarDatos()">Guardar Datos del Estudiante</button>
+
+                </form>
+
+            </div>
+
+		</div>
+
+    </body>
+
+</html>

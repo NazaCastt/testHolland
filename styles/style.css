@@ -1,0 +1,40 @@
+/* Agrega tu archivo CSS personalizado si es necesario */
+
+/* Estilo para la imagen */
+img {
+    max-width: 100%; /* La imagen se ajustará al ancho del contenedor */
+    height: auto; /* La altura se ajustará proporcionalmente al ancho */
+    display: block; /* Elimina el espacio adicional debajo de la imagen */
+    margin: 0 auto; /* Centra la imagen en el contenedor */
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+}
+
+.container {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.form-check {
+    margin-bottom: 15px;
+}
+
+.form-check-input {
+    margin-top: 1px;
+}
+
+.form-check-label {
+    font-size: 18px;
+    margin-left: 5px;
+}
