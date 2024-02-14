@@ -112,7 +112,41 @@ $(document).ready(function () {
                 }
                 return total;
             }, 0);
-        }
+        } 
+        var urlParams = new URLSearchParams(window.location.search);
+        var ci = urlParams.get('ci');
+          // Crea un objeto JSON con los datos del formulario
+        var datosTest = {
+        ci: ci,
+        nrPregunta: respuestasSeleccionadas,            
+        puntajeTotal: [
+            puntajesTotales.R, 
+            puntajesTotales.I, 
+            puntajesTotales.A,
+            puntajesTotales.S,
+            puntajesTotales.E,
+            puntajesTotales.C
+        ]
+        };
+        console.log(datosTest);
+    
+        // Realiza una solicitud POST al backend
+        fetch('https://apitest.dev.404.codes/api/test', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(datosTest)
+        })
+        .then(response => response.json())
+        .then(data => {
+        console.log('Respuesta del servidor:', data);
+        // Aquí puedes manejar la respuesta del servidor según tus necesidades
+
+        })
+        .catch(error => {
+        console.error('Error al enviar datos:', error);
+        });
 
         // Encuentra y muestra los tres mayores puntajes
         const tresMayoresPuntajes = Object.entries(puntajesTotales)
@@ -141,47 +175,6 @@ $(document).ready(function () {
 
 
         // Obtiene los valores del formulario
-
-        var rSeleccionadas = respuestasSeleccionadas; // Cambiado de .value a la variable directamente
-        var urlParams = new URLSearchParams(window.location.search);
-        var ci = urlParams.get('ci');
-        console.log('Valor de ci:', ci);
-    
-        // Crea un objeto JSON con los datos del formulario
-        /* var datosTest = {
-        ci: ci,
-        nrPregunta: rSeleccionadas,            
-        puntajesTotales: [
-            puntajesTotales.R, 
-            puntajesTotales.I, 
-            puntajesTotales.A,
-            puntajesTotales.S,
-            puntajesTotales.E,
-            puntajesTotales.C
-        ]
-        };
-    
-        // Realiza una solicitud POST al backend
-        fetch('https://apitest.dev.404.codes/api/test', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(datosTest)
-        })
-        .then(response => response.json())
-        .then(data => {
-        console.log('Respuesta del servidor:', data);
-        // Aquí puedes manejar la respuesta del servidor según tus necesidades
-
-        // Redirecciona a otra página después de enviar los datos
-        window.location.href = '../view/test.html';
-
-        })
-        .catch(error => {
-        console.error('Error al enviar datos:', error);
-        }); */
-
 
     });
 
