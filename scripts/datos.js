@@ -1,4 +1,35 @@
 
+function validarCarrerasDiferentes() {
+  var opcionesInvalidas = [];
+
+  for (var i = 1; i <= 3; i++) {
+    var opcionSeleccionada = $("#carrera" + i).val();
+    for (var j = 1; j <= 3; j++) {
+      if (j !== i) {
+        var otraOpcionSeleccionada = $("#carrera" + j).val();
+        if (otraOpcionSeleccionada === opcionSeleccionada) {
+          alert("Por favor, selecciona carreras diferentes para cada opción.");
+          $("#carrera" + i).val(""); // Restablece la selección del menú desplegable actual
+          return false;
+        }
+        opcionesInvalidas.push(otraOpcionSeleccionada);
+      }
+    }
+  }
+
+  for (var i = 1; i <= 3; i++) {
+    for (var j = 1; j <= 3; j++) {
+      if (j !== i) {
+        $("#carrera" + j + " option").prop("disabled", false);
+        opcionesInvalidas.forEach(function (opcionInvalida) {
+          $("#carrera" + j + " option[value='" + opcionInvalida + "']").prop("disabled", true);
+        });   
+      }
+    }
+  }
+
+  return true;
+}
 
 function enviarDatos() {
 
@@ -17,43 +48,8 @@ function enviarDatos() {
   var carrera2 = document.getElementById("carrera2").value;
   var carrera3 = document.getElementById("carrera3").value;
 
-  // Agrega un evento de cambio a cada menú desplegable
-  for (var i = 1; i <= 3; i++) {
-    $("#carrera" + i).change(function () {
-
-      // Obtiene la opción seleccionada en el menú actual
-      var opcionSeleccionada = $(this).val();
-
-      // Validar que la opción seleccionada sea diferente en los otros menús desplegables
-      var opcionesInvalidas = [];
-        for (var j = 1; j <= 3; j++) {
-          if (j !== i) {
-            var otraOpcionSeleccionada = $("#carrera" + j).val();    
-            if (otraOpcionSeleccionada === opcionSeleccionada) {      
-              alert("Por favor, selecciona carreras diferentes para cada opción."); 
-              // Puedes resetear la selección del menú desplegable actual      
-              $(this).val("");
-                return;
-              }
-            opcionesInvalidas.push(otraOpcionSeleccionada);
-          }
-        }
-
-        // Deshabilita las opciones seleccionadas en los otros menús desplegables
-        for (var j = 1; j <= 3; j++) {
-          if (j !== i) {
-            $("#carrera" + j + " option").prop("disabled", false); // Habilita todas las opciones primero  
-            opcionesInvalidas.forEach(function (opcionInvalida) {
-              $("#carrera" + j + " option[value='" + opcionInvalida + "']").prop("disabled", true);
-            });
-          }
-        }
-    });
-  }
-
   // Validar que se haya seleccionado una carrera diferente en cada opción
-  if (carrera1 === carrera2 || carrera1 === carrera3 || carrera2 === carrera3) {
-    alert("Por favor, selecciona carreras diferentes para cada opción.");
+  if (!validarCarrerasDiferentes()) {
     return;
   }
 
