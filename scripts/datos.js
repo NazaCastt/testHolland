@@ -26,7 +26,7 @@ function enviarDatos() {
 
       // Validar que la opción seleccionada sea diferente en los otros menús desplegables
       var opcionesInvalidas = [];
-        for (var j = 1; j <= 3; j++) {\
+        for (var j = 1; j <= 3; j++) {
           if (j !== i) {
             var otraOpcionSeleccionada = $("#carrera" + j).val();    
             if (otraOpcionSeleccionada === opcionSeleccionada) {      
